@@ -29,3 +29,16 @@ pipeable and scriptable. Required fields validated manually for better error mes
 **Next:** Add README demo GIF. Write tests for brief and log logic.
 
 ---
+
+### 2025-06-25 — README rewrite and documentation pass
+
+**Focus:** Make the repository presentable and self-explanatory for new visitors.
+
+**Changes:** Rewrote README.md to cover all three commands with sample output,
+install instructions, and the /ai directory explanation. Updated TASKS.md.
+
+**Decisions:** None.
+
+**Next:** Add demo GIF. Write tests. Publish to npm.
+
+---
