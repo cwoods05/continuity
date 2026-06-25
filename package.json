@@ -1,0 +1,40 @@
+{
+  "name": "continuity",
+  "version": "0.1.0",
+  "description": "Maintain project continuity across AI coding sessions",
+  "type": "module",
+  "bin": {
+    "continuity": "./dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/index.ts",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "pnpm run build"
+  },
+  "keywords": [
+    "cli",
+    "ai",
+    "continuity",
+    "agent",
+    "context"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@types/node": "^26.0.1",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "commander": "^15.0.0"
+  }
+}
