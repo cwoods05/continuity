@@ -1,4 +1,5 @@
 import { Command } from "commander";
+import { registerBriefCommand } from "./commands/brief.js";
 import { registerInitCommand } from "./commands/init.js";
 import { readPackageJson } from "./utils/package.js";
 
@@ -13,6 +14,7 @@ export function runCli(argv: string[]): void {
     .version(pkg.version);
 
   registerInitCommand(program);
+  registerBriefCommand(program);
 
   program.parse(argv);
 }
