@@ -96,3 +96,20 @@ No mocks. Tests cover all major edge cases for generateBrief and isEmptyOrTempla
 **Next:** Run pnpm publish. Record demo GIF.
 
 ---
+
+### 2025-06-25 — publish readiness, MCP write tools, CI, repo hygiene
+
+**Focus:** Take project from feature-complete to publishable and adoptable.
+
+**Changes:** Fixed readPackageJson() publish-blocking bug. Added log_session and
+update_file MCP tools. Added --format json to continuity brief. Added tests for
+log command. Added LICENSE, CONTRIBUTING.md, CHANGELOG.md. Added GitHub Actions CI.
+Updated all /ai documentation.
+
+**Decisions:** createRequire chosen over import.meta.url for package.json reading
+because it resolves correctly both locally and post-publish. MCP write tools added
+to close the full read-write loop for agent sessions.
+
+**Next:** Run pnpm publish. Record demo GIF for README.
+
+---

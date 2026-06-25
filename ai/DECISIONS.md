@@ -55,3 +55,26 @@ built-in handling.
 alias or agent instruction.
 
 ---
+
+### 2025-06-25 — createRequire for package.json reading
+
+**Context:** import.meta.url-based path traversal breaks post npm-publish because
+the relative path to package.json no longer exists in the installed package layout.
+
+**Decision:** Use createRequire(import.meta.url) to require package.json. Node resolves
+this relative to dist/ and finds the package root correctly in all environments.
+
+**Consequences:** Slightly less idiomatic ESM but correct in all deployment contexts.
+
+### 2025-06-25 — MCP write tools: log_session and update_file
+
+**Context:** MCP server was read-only. Agents could pull context but not close the
+loop by updating /ai files after a session without developer typing continuity log.
+
+**Decision:** Add log_session and update_file tools to the MCP server. update_file
+uses an allowlist of valid filenames to prevent path traversal.
+
+**Consequences:** Agents using Claude Desktop or Cursor can now fully manage project
+memory without any manual CLI steps.
+
+---

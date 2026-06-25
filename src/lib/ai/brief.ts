@@ -17,6 +17,7 @@ export interface BriefResult {
   content: string;
   sectionsIncluded: string[];
   sectionsSkipped: string[];
+  sectionsMap: Record<string, string>;
 }
 
 function shouldIncludeSection(
@@ -41,6 +42,7 @@ export async function generateBrief(
   const aiDirectory = path.resolve(targetDirectory, AI_DIRECTORY_NAME);
   const sectionsIncluded: string[] = [];
   const sectionsSkipped: string[] = [];
+  const sectionsMap: Record<string, string> = {};
   const renderedSections: string[] = [];
 
   for (const section of SECTIONS) {
@@ -76,6 +78,7 @@ export async function generateBrief(
     }
 
     sectionsIncluded.push(section.key);
+    sectionsMap[section.key] = content;
     renderedSections.push(`${section.header}\n${content}`);
   }
 
@@ -90,5 +93,6 @@ export async function generateBrief(
     content: parts.join("\n\n"),
     sectionsIncluded,
     sectionsSkipped,
+    sectionsMap,
   };
 }

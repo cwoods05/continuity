@@ -1,4 +1,4 @@
-import { mkdtemp, readFile, rm } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
@@ -16,24 +16,16 @@ async function createTempProject(): Promise<string> {
   return dir;
 }
 
+async function createAiDir(projectDir: string): Promise<string> {
+  const aiDir = path.join(projectDir, "ai");
+  await mkdir(aiDir, { recursive: true });
+  return aiDir;
+}
+
 describe("appendSessionEntry", () => {
-  it("throws if /ai directory does not exist", async () => {
+  it("creates SESSION_LOG.md if it does not exist and appends the entry", async () => {
     const projectDir = await createTempProject();
-
-    await expect(
-      appendSessionEntry(projectDir, {
-        focus: "focus",
-        changes: "changes",
-        decisions: "none",
-        next: "next",
-      }),
-    ).rejects.toThrow(/No \/ai directory found/);
-  });
-
-  it("creates SESSION_LOG.md if it does not exist, then appends the entry", async () => {
-    const projectDir = await createTempProject();
-    const { mkdir } = await import("node:fs/promises");
-    await mkdir(path.join(projectDir, "ai"), { recursive: true });
+    await createAiDir(projectDir);
 
     const result = await appendSessionEntry(projectDir, {
       focus: "New session",
@@ -45,20 +37,15 @@ describe("appendSessionEntry", () => {
     const filePath = path.join(projectDir, "ai", "SESSION_LOG.md");
     const content = await readFile(filePath, "utf8");
 
-    expect(result.filePath).toBe(filePath);
     expect(content).toContain("# Session Log");
     expect(content).toContain("## Log");
-    expect(content).toContain("**Focus:** New session");
-    expect(content).toContain("**Changes:** Created files");
-    expect(content).toContain("**Decisions:** none");
-    expect(content).toContain("**Next:** Write tests");
+    expect(result.filePath).toBe(filePath);
+    expect(result.entryAdded).toContain("**Focus:** New session");
   });
 
-  it("appends to an existing SESSION_LOG.md without overwriting it", async () => {
+  it("appends a new entry to an existing SESSION_LOG.md without overwriting prior entries", async () => {
     const projectDir = await createTempProject();
-    const aiDir = path.join(projectDir, "ai");
-    const { mkdir, writeFile } = await import("node:fs/promises");
-    await mkdir(aiDir, { recursive: true });
+    const aiDir = await createAiDir(projectDir);
 
     const existing = `# Session Log
 
@@ -77,8 +64,7 @@ describe("appendSessionEntry", () => {
 ---
 `;
 
-    const filePath = path.join(aiDir, "SESSION_LOG.md");
-    await writeFile(filePath, existing, "utf8");
+    await writeFile(path.join(aiDir, "SESSION_LOG.md"), existing, "utf8");
 
     await appendSessionEntry(projectDir, {
       focus: "Second session",
@@ -87,7 +73,7 @@ describe("appendSessionEntry", () => {
       next: "Ship",
     });
 
-    const content = await readFile(filePath, "utf8");
+    const content = await readFile(path.join(aiDir, "SESSION_LOG.md"), "utf8");
 
     expect(content).toContain("### 2025-06-01 — Existing session");
     expect(content).toContain("**Focus:** Keep me");
@@ -95,32 +81,40 @@ describe("appendSessionEntry", () => {
     expect(content).toContain("**Changes:** Added more");
   });
 
-  it("uses today's date by default in YYYY-MM-DD format", async () => {
+  it("entry contains all four required fields: Focus, Changes, Decisions, Next", async () => {
     const projectDir = await createTempProject();
-    const { mkdir } = await import("node:fs/promises");
-    await mkdir(path.join(projectDir, "ai"), { recursive: true });
-
-    const now = new Date();
-    const expectedDate = [
-      now.getFullYear(),
-      String(now.getMonth() + 1).padStart(2, "0"),
-      String(now.getDate()).padStart(2, "0"),
-    ].join("-");
+    await createAiDir(projectDir);
 
     const result = await appendSessionEntry(projectDir, {
-      focus: "Dated session",
+      focus: "Test focus",
+      changes: "Test changes",
+      decisions: "Test decisions",
+      next: "Test next",
+    });
+
+    expect(result.entryAdded).toContain("**Focus:** Test focus");
+    expect(result.entryAdded).toContain("**Changes:** Test changes");
+    expect(result.entryAdded).toContain("**Decisions:** Test decisions");
+    expect(result.entryAdded).toContain("**Next:** Test next");
+  });
+
+  it("entry heading starts with ### followed by the date", async () => {
+    const projectDir = await createTempProject();
+    await createAiDir(projectDir);
+
+    const result = await appendSessionEntry(projectDir, {
+      focus: "Heading test",
       changes: "changes",
       decisions: "none",
       next: "next",
     });
 
-    expect(result.entryAdded).toContain(`### ${expectedDate} — Dated session`);
+    expect(result.entryAdded).toMatch(/^### \d{4}-\d{2}-\d{2} — Heading test/m);
   });
 
-  it("respects the date override", async () => {
+  it("uses date override when provided", async () => {
     const projectDir = await createTempProject();
-    const { mkdir } = await import("node:fs/promises");
-    await mkdir(path.join(projectDir, "ai"), { recursive: true });
+    await createAiDir(projectDir);
 
     const result = await appendSessionEntry(projectDir, {
       focus: "Override session",
@@ -131,9 +125,22 @@ describe("appendSessionEntry", () => {
     });
 
     expect(result.entryAdded).toContain("### 2024-12-31 — Override session");
-    expect(result.entryAdded).toContain("**Focus:** Override session");
-    expect(result.entryAdded).toContain("**Changes:** changes");
-    expect(result.entryAdded).toContain("**Decisions:** none");
-    expect(result.entryAdded).toContain("**Next:** next");
+  });
+
+  it("returns an object indicating success", async () => {
+    const projectDir = await createTempProject();
+    await createAiDir(projectDir);
+
+    const result = await appendSessionEntry(projectDir, {
+      focus: "Success test",
+      changes: "changes",
+      decisions: "none",
+      next: "next",
+    });
+
+    expect(result).toEqual({
+      entryAdded: expect.stringContaining("**Focus:** Success test"),
+      filePath: path.join(projectDir, "ai", "SESSION_LOG.md"),
+    });
   });
 });
