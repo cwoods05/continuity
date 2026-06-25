@@ -42,3 +42,15 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 **Next:** Add demo GIF. Write tests. Publish to npm.
 
 ---
+
+### 2025-06-25 — doctor command, README overhaul, npm publish readiness
+
+**Focus:** Make the repository ready for public sharing and first-time visitors.
+
+**Changes:** Added continuity doctor command (src/lib/ai/doctor.ts, src/commands/doctor.ts). Rewrote README.md with sample output, install instructions, and full command reference. Updated package.json to version 0.3.0.
+
+**Decisions:** doctor exits with code 1 on unhealthy files to support CI use. See DECISIONS.md.
+
+**Next:** Record demo GIF. Write tests. Publish to npm.
+
+---

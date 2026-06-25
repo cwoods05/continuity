@@ -15,3 +15,15 @@ Record significant technical and product decisions here. Prefer short, dated ent
 **Consequences:** Requires a manual copy-paste step. Acceptable for v0.2. Auto-injection via MCP or editor plugins is a v0.4+ concern.
 
 ---
+
+### 2025-06-25 — doctor command design
+
+**Context:** Needed a way for developers to know if their /ai files are actually useful after scaffolding.
+
+**Decision:** continuity doctor — a read-only health check that reports file status and exits with code 1 if any file is unhealthy.
+
+**Rationale:** Closes the feedback loop after init. Tells developers exactly what to fill in. Exit code 1 makes it usable in CI. No state, no side effects, easy to trust.
+
+**Consequences:** None significant. Purely additive.
+
+---

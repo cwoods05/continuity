@@ -1,7 +1,7 @@
 {
   "name": "continuity",
-  "version": "0.1.0",
-  "description": "Maintain project continuity across AI coding sessions",
+  "version": "0.3.0",
+  "description": "Project memory for AI-assisted software development",
   "type": "module",
   "bin": {
     "continuity": "./dist/index.js"
