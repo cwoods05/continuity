@@ -46,6 +46,11 @@ _Add session entries below._`;
 ---`;
 
     const result = extractLastSessionEntry(content);
+    expect(result).toContain("### 2025-06-25 — Single session");
+    expect(result).toContain("**Focus:** Build the feature");
+    expect(result).toContain("**Changes:** Updated files");
+    expect(result).toContain("**Decisions:** none");
+    expect(result).toContain("**Next:** Ship it");
     expect(result).toBe(
       `### 2025-06-25 — Single session
 

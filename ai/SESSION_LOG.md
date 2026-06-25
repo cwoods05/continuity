@@ -83,3 +83,16 @@ Rewrote README.md with accurate command reference and sample output.
 **Next:** Run pnpm publish. Record demo GIF.
 
 ---
+
+### 2025-06-25 — test coverage for brief, doctor, session, and content
+
+**Focus:** Add missing test coverage before npm publish.
+
+**Changes:** Created tests/brief.test.ts, tests/session.test.ts, tests/content.test.ts.
+
+**Decisions:** Used real temp directories throughout, consistent with existing test style.
+No mocks. Tests cover all major edge cases for generateBrief and isEmptyOrTemplateOnly.
+
+**Next:** Run pnpm publish. Record demo GIF.
+
+---
