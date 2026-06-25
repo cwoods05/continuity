@@ -3,9 +3,9 @@ import path from "node:path";
 import { extractLastSessionEntry } from "./session.js";
 import {
   AI_DIRECTORY_NAME,
-  isEmptyOrTemplateOnly,
   SECTIONS,
 } from "./templates.js";
+import { isEmptyOrTemplateOnly } from "./content.js";
 
 export type FileStatus = "healthy" | "empty" | "missing";
 

@@ -3,10 +3,10 @@ import path from "node:path";
 import { extractLastSessionEntry } from "./session.js";
 import {
   AI_DIRECTORY_NAME,
-  isEmptyOrTemplateOnly,
   SECTIONS,
   type SectionDef,
 } from "./templates.js";
+import { isEmptyOrTemplateOnly } from "./content.js";
 
 export interface BriefOptions {
   includeRules: boolean;

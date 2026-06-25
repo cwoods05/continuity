@@ -3,6 +3,7 @@ import { registerBriefCommand } from "./commands/brief.js";
 import { registerDoctorCommand } from "./commands/doctor.js";
 import { registerInitCommand } from "./commands/init.js";
 import { registerLogCommand } from "./commands/log.js";
+import { registerMcpCommand } from "./commands/mcp.js";
 import { readPackageJson } from "./utils/package.js";
 
 export function runCli(argv: string[]): void {
@@ -19,6 +20,7 @@ export function runCli(argv: string[]): void {
   registerBriefCommand(program);
   registerLogCommand(program);
   registerDoctorCommand(program);
+  registerMcpCommand(program);
 
   program.parse(argv);
 }

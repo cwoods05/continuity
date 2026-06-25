@@ -54,3 +54,15 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 **Next:** Record demo GIF. Write tests. Publish to npm.
 
 ---
+
+### 2025-06-25 — MCP server implementation and code cleanup
+
+**Focus:** Add MCP server so agents can pull context automatically. Extract shared utility to remove duplication.
+
+**Changes:** Created src/mcp/server.ts, src/commands/mcp.ts, src/lib/ai/content.ts. Updated src/lib/ai/brief.ts, src/lib/ai/doctor.ts, src/cli.ts, README.md, ai/TASKS.md, ai/DECISIONS.md.
+
+**Decisions:** MCP chosen as v0.4 feature. stdio transport — no ports, no daemons. See DECISIONS.md.
+
+**Next:** Publish to npm. Record demo GIF.
+
+---
