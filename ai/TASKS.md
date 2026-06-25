@@ -19,6 +19,5 @@
 - [x] continuity log — append session entries to SESSION_LOG.md
 - [x] continuity doctor — validate /ai file health
 - [x] README overhaul with sample output and install instructions
-- [x] npm publish readiness (version 0.3.0)
+- [x] npm publish readiness (version 0.4.0)
 - [x] MCP server — continuity mcp exposes get_brief and get_file tools
-- [x] Extract isEmptyOrTemplateOnly to shared src/lib/ai/content.ts

@@ -39,3 +39,19 @@ Record significant technical and product decisions here. Prefer short, dated ent
 **Consequences:** Adds @modelcontextprotocol/sdk as a production dependency. Server is long-running but only while the agent session is active.
 
 ---
+
+### 2025-06-25 — log command design
+
+**Context:** Needed a way to close the habit loop after an AI coding session.
+
+**Decision:** continuity log — flag-based CLI command that appends a structured
+entry to SESSION_LOG.md. No interactive prompts. Fully scriptable.
+
+**Rationale:** Flag-based input keeps the command pipeable and automation-friendly.
+Required fields validated manually to give better error messages than Commander's
+built-in handling.
+
+**Consequences:** Slightly verbose to type manually, but easily wrapped in a shell
+alias or agent instruction.
+
+---

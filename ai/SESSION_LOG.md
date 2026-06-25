@@ -66,3 +66,17 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 **Next:** Publish to npm. Record demo GIF.
 
 ---
+
+### 2025-06-25 — log command, tests, npm publish readiness
+
+**Focus:** Close the habit loop, add test coverage, prepare for first npm publish.
+
+**Changes:** Created src/lib/ai/log.ts, src/commands/log.ts, tests/session.test.ts,
+tests/content.test.ts, tests/log.test.ts, vitest.config.ts. Modified src/cli.ts,
+package.json (version 0.4.0, engines node>=22, vitest added).
+
+**Decisions:** Flag-based log input. Real temp dirs for tests, no mocks. See DECISIONS.md.
+
+**Next:** Run pnpm test to verify. Then publish to npm.
+
+---
