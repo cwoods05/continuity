@@ -4,7 +4,7 @@ import type { Command } from "commander";
 import { runDoctor } from "../lib/ai/doctor.js";
 import { AI_DIRECTORY_NAME } from "../lib/ai/templates.js";
 
-const FILENAME_WIDTH = 18;
+const FILENAME_WIDTH = 20;
 
 function formatReportLine(filename: string, status: string): string {
   return `  ${filename.padEnd(FILENAME_WIDTH)}${status}`;
@@ -42,17 +42,21 @@ export function registerDoctorCommand(program: Command): void {
       }
 
       lines.push("");
+      lines.push(
+        `  ${result.healthyCount} of ${result.reports.length} files healthy`,
+      );
 
-      if (result.allHealthy) {
-        lines.push("  All context files are healthy.");
-      } else {
-        lines.push(
-          `  ${result.healthyCount} healthy  ${result.emptyCount} empty  ${result.missingCount} missing`,
-        );
+      if (result.missingCount > 0 || result.emptyCount > 0) {
+        lines.push("");
 
         if (result.missingCount > 0) {
-          lines.push("");
-          lines.push("  Run `continuity init` to create missing files.");
+          lines.push("  Run `continuity init` to create any missing files.");
+        }
+
+        if (result.emptyCount > 0) {
+          lines.push(
+            "  Fill in empty files to improve brief output quality.",
+          );
         }
       }
 

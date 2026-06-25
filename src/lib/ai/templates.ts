@@ -161,3 +161,41 @@ Which files or docs agents should consult first when starting work.
 `,
   },
 ] as const;
+
+export interface SectionDef {
+  key: string;
+  filename: string;
+  header: string;
+  useSessionExtract?: boolean;
+}
+
+export const SECTIONS: readonly SectionDef[] = [
+  { key: "project", filename: "PROJECT.md", header: "--- Project ---" },
+  { key: "arch", filename: "ARCHITECTURE.md", header: "--- Architecture ---" },
+  { key: "tasks", filename: "TASKS.md", header: "--- Active Tasks ---" },
+  {
+    key: "decisions",
+    filename: "DECISIONS.md",
+    header: "--- Recent Decisions ---",
+  },
+  { key: "rules", filename: "AGENT_RULES.md", header: "--- Agent Rules ---" },
+  {
+    key: "log",
+    filename: "SESSION_LOG.md",
+    header: "--- Last Session ---",
+    useSessionExtract: true,
+  },
+];
+
+export function isEmptyOrTemplateOnly(content: string): boolean {
+  const trimmed = content.trim();
+  if (trimmed.endsWith("_Add decisions below as they are made._")) return true;
+  if (trimmed.endsWith("_Add session entries below._")) return true;
+  const lines = trimmed.split("\n");
+  const withoutH1 = lines
+    .filter((line, i) => !(i === 0 && /^#\s/.test(line)))
+    .join("\n")
+    .trim();
+  if (withoutH1.length < 30) return true;
+  return false;
+}
