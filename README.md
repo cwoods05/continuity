@@ -22,7 +22,7 @@ Continuity scaffolds a small /ai directory in your project. You fill in the file
 From then on, one command gives any AI assistant everything it needs to work effectively.
 
   # 1. Install
-  npm install -g continuity
+  npm install -g @continuityai/cli
 
   # 2. Initialize your project
   continuity init
@@ -138,12 +138,15 @@ Exit code 0 if all files are healthy. Exit code 1 if any are missing or empty.
 
 ## Install
 
-  npm install -g continuity
+  npm install -g @continuityai/cli
+
+The package is published as @continuityai/cli but installs as the `continuity` command.
+All commands below use `continuity` as the binary name.
 
 Or use without installing:
 
-  npx continuity init
-  npx continuity brief
+  npx @continuityai/cli init
+  npx @continuityai/cli brief
 
 ---
 

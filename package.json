@@ -1,7 +1,15 @@
 {
-  "name": "continuity",
-  "version": "0.4.0",
+  "name": "@continuityai/cli",
+  "version": "0.5.1",
   "description": "Project memory for AI-assisted software development",
+  "homepage": "https://github.com/your-org/continuity",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/continuity"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/continuity/issues"
+  },
   "type": "module",
   "bin": {
     "continuity": "./dist/index.js"

@@ -78,3 +78,19 @@ uses an allowlist of valid filenames to prevent path traversal.
 memory without any manual CLI steps.
 
 ---
+
+### 2025-06-25 — scoped package name @continuityai/cli
+
+**Context:** npm package name "continuity" is taken (abandoned 12-year-old package
+at 0.0.0 with 0 dependents, but npm will not release it).
+
+**Decision:** Publish as @continuityai/cli. Binary name stays "continuity".
+
+**Rationale:** Scoped packages look intentional. Namespaces future packages like
+@continuityai/vscode or @continuityai/sdk. Binary name separation means zero
+impact on docs, user commands, or MCP configs.
+
+**Consequences:** Install command is slightly longer (npm install -g @continuityai/cli)
+but this is a one-time action. All daily-use commands are unaffected.
+
+---

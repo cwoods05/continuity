@@ -2,6 +2,9 @@
 
 ## Setup
 
+  # Package name: @continuityai/cli
+  # Binary name: continuity (unchanged)
+
   git clone https://github.com/your-org/continuity
   cd continuity
   pnpm install

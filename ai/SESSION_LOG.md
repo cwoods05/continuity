@@ -113,3 +113,19 @@ to close the full read-write loop for agent sessions.
 **Next:** Run pnpm publish. Record demo GIF for README.
 
 ---
+
+### 2025-06-25 — package rename to @continuityai/cli and publish finalization
+
+**Focus:** Resolve npm name conflict and finalize package for publish.
+
+**Changes:** Renamed package from "continuity" to "@continuityai/cli". Binary name
+"continuity" unchanged. Updated README install instructions. Added repository,
+homepage, bugs fields to package.json. Bumped to v0.5.1.
+
+**Decisions:** Scoped package chosen over unscoped rename. Binary name stays
+"continuity" so all existing docs and user commands are unaffected.
+
+**Next:** Run npm login. Run pnpm publish --access public. Create GitHub repo.
+Update repository URLs in package.json. Record demo GIF.
+
+---
