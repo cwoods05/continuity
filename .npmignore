@@ -1,0 +1,10 @@
+src/
+tests/
+ai/
+*.ts
+!dist/**
+tsconfig.json
+vitest.config.ts
+pnpm-lock.yaml
+.gitignore
+*.log

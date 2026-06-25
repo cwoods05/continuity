@@ -47,7 +47,9 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 
 **Focus:** Make the repository ready for public sharing and first-time visitors.
 
-**Changes:** Added continuity doctor command (src/lib/ai/doctor.ts, src/commands/doctor.ts). Rewrote README.md with sample output, install instructions, and full command reference. Updated package.json to version 0.3.0.
+**Changes:** Added continuity doctor command (src/lib/ai/doctor.ts, src/commands/doctor.ts).
+Rewrote README.md with sample output, install instructions, and full command reference.
+Updated package.json to version 0.3.0.
 
 **Decisions:** doctor exits with code 1 on unhealthy files to support CI use. See DECISIONS.md.
 
@@ -59,7 +61,8 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 
 **Focus:** Add MCP server so agents can pull context automatically. Extract shared utility to remove duplication.
 
-**Changes:** Created src/mcp/server.ts, src/commands/mcp.ts, src/lib/ai/content.ts. Updated src/lib/ai/brief.ts, src/lib/ai/doctor.ts, src/cli.ts, README.md, ai/TASKS.md, ai/DECISIONS.md.
+**Changes:** Created src/mcp/server.ts, src/commands/mcp.ts, src/lib/ai/content.ts.
+Updated src/lib/ai/brief.ts, src/lib/ai/doctor.ts, src/cli.ts, README.md, ai/TASKS.md, ai/DECISIONS.md.
 
 **Decisions:** MCP chosen as v0.4 feature. stdio transport — no ports, no daemons. See DECISIONS.md.
 
@@ -67,16 +70,16 @@ install instructions, and the /ai directory explanation. Updated TASKS.md.
 
 ---
 
-### 2025-06-25 — log command, tests, npm publish readiness
+### 2025-06-25 — npm publish readiness and self-documentation
 
-**Focus:** Close the habit loop, add test coverage, prepare for first npm publish.
+**Focus:** Make the repository installable by a stranger and demonstrate its own tool.
 
-**Changes:** Created src/lib/ai/log.ts, src/commands/log.ts, tests/session.test.ts,
-tests/content.test.ts, tests/log.test.ts, vitest.config.ts. Modified src/cli.ts,
-package.json (version 0.4.0, engines node>=22, vitest added).
+**Changes:** Updated package.json with engines, keywords, prepublishOnly script.
+Added .npmignore. Filled in all /ai markdown files with real project content.
+Rewrote README.md with accurate command reference and sample output.
 
-**Decisions:** Flag-based log input. Real temp dirs for tests, no mocks. See DECISIONS.md.
+**Decisions:** None beyond what is already recorded.
 
-**Next:** Run pnpm test to verify. Then publish to npm.
+**Next:** Run pnpm publish. Record demo GIF.
 
 ---
