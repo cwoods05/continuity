@@ -10,6 +10,10 @@ work effectively in your project.
 
 ---
 
+## See it in action
+
+![Continuity Demo](./demo.gif)
+
 ## Try it in 60 seconds
 
 ```
