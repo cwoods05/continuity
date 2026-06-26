@@ -2,9 +2,11 @@
 
 ## Active
 
-- [ ] Publish to npm: run `npm login` then `pnpm publish --access public`
-- [ ] Update GitHub repository URLs in package.json after repo is created
-- [ ] Record README demo GIF showing brief | pbcopy and MCP workflows
+- [ ] Create GitHub repository and push all code
+- [ ] Run npm login and pnpm publish --access public
+- [ ] Replace all TODO_REPLACE_USERNAME placeholders in package.json, README, CONTRIBUTING
+- [ ] Record demo GIF: continuity init -i followed by continuity brief | pbcopy
+- [ ] Share with 5 real developers and collect feedback via GitHub issues
 
 ## Backlog
 

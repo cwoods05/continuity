@@ -94,3 +94,34 @@ impact on docs, user commands, or MCP configs.
 but this is a one-time action. All daily-use commands are unaffected.
 
 ---
+
+### 2025-06-26 — /ai directory name kept for now, decision deferred
+
+**Context:** Some projects may already use an ai/ directory for ML models or
+datasets. Alternative considered: .continuity/
+
+**Decision:** Keep /ai for now. The decision is not permanent.
+
+**Rationale:** /ai is visible, human-readable, and communicates intent immediately.
+Hidden directories (.continuity/) feel like tooling internals. The risk of conflict
+exists but has not been reported by a real user yet.
+
+**Consequences:** Will revisit if user reports indicate conflicts. Migration path
+would be: support both, deprecate /ai, move to .continuity/ with a codemod.
+
+---
+
+### 2025-06-26 — README repositioned around manual workflow first, MCP second
+
+**Context:** MCP is powerful but adds cognitive overhead for first-time visitors.
+The manual brief | pbcopy workflow is universally accessible and faster to explain.
+
+**Decision:** Lead README with the 60-second manual workflow. Move MCP to a later
+section clearly labeled as optional and advanced.
+
+**Rationale:** First-time visitors should be able to understand and try the tool
+before encountering MCP configuration. MCP is a power feature, not the entry point.
+
+**Consequences:** None. MCP is not removed or downplayed as a capability.
+
+---

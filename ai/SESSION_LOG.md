@@ -144,3 +144,21 @@ Added src/utils/prompt.ts. Updated ai/TASKS.md.
 **Next:** Publish to npm. Record demo GIF.
 
 ---
+
+### 2025-06-26 — Public-facing polish and README repositioning
+
+**Focus:** Make Continuity understandable, installable, demoable, and believable
+to a stranger landing on GitHub for the first time.
+
+**Changes:** Rewrote README.md around the fastest possible aha workflow. Rewrote
+CONTRIBUTING.md with feedback-first framing. Added GitHub issue templates for
+feedback and bug reports. Updated package.json metadata. Appended two DECISIONS.md
+entries on /ai naming and README strategy.
+
+**Decisions:** MCP moved to secondary position in README. /ai directory name kept
+for now with a documented decision to revisit. See DECISIONS.md.
+
+**Next:** Publish to npm. Create GitHub repo. Share with 5 real developers and
+collect feedback via the new issue template.
+
+---

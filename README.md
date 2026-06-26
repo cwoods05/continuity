@@ -1,87 +1,236 @@
 # Continuity
 
-**Project memory for AI-assisted software development.**
+**Repo-level memory for AI coding assistants.**
 
-Continuity gives any AI coding assistant instant access to your project's goals,
-architecture, decisions, and active tasks. One command. No API keys. No background
-services. Works with every AI tool.
+AI agents forget everything between sessions. You re-explain the same architecture,
+re-describe the same conventions, re-paste the same context — every single time.
 
----
-
-## The Problem
-
-AI coding assistants forget everything between sessions. Every new chat starts cold.
-You re-explain the same architecture, the same conventions, the same decisions — or
-you accept degraded output from an agent that does not know your codebase.
+Continuity fixes this. One command gives any AI assistant everything it needs to
+work effectively in your project.
 
 ---
 
-## How It Works
+## Try it in 60 seconds
 
-Continuity scaffolds a small /ai directory in your project. You fill in the files once.
-From then on, one command gives any AI assistant everything it needs to work effectively.
+```
+npm install -g @continuityai/cli
 
-  # 1. Install
-  npm install -g @continuityai/cli
+cd your-project
+continuity init
+continuity brief | pbcopy   # macOS — paste into any AI chat and start working
+```
 
-  # 2. Initialize your project
-  continuity init
-
-  # 3. Fill in your /ai files (PROJECT.md, ARCHITECTURE.md, TASKS.md, etc.)
-
-  # 4a. Manual workflow — copy brief to clipboard and paste into any AI chat:
-  continuity brief | pbcopy     # macOS
-  continuity brief | xclip      # Linux
-  continuity brief              # print to stdout
-
-  # 4b. Automatic workflow — run as an MCP server for Claude Desktop or Cursor:
-  continuity mcp
-
-  # 5. After your session, log what happened:
-  continuity log \
-    --focus "Implemented auth middleware" \
-    --changes "Created src/middleware/auth.ts, updated routes" \
-    --decisions "Used JWT over sessions for statelessness" \
-    --next "Write tests for token expiry edge cases"
-
-  # 6. Check your context files are healthy:
-  continuity doctor
+That is it. No API keys. No background services. Works with Cursor, Claude,
+ChatGPT, Copilot, or any other AI tool.
 
 ---
 
-## MCP Setup (Automatic Context Injection)
+## The problem
 
-With MCP, agents pull your project context automatically. No copy-paste required.
+Every AI coding session starts cold. Your agent does not know:
+
+- What this project does or why it exists
+- How the codebase is structured
+- What decisions were made and why
+- What is currently in progress
+- How it should behave in this specific repo
+
+You either paste context manually every time, accept worse output, or spend the
+first ten minutes of every session re-explaining things you explained last week.
+
+---
+
+## How Continuity works
+
+Continuity scaffolds a small /ai directory in your project. You fill in the
+files once. From then on, one command produces a compact context brief that any
+AI assistant can immediately use.
+
+```
+continuity init        # scaffold /ai directory with context files
+continuity brief       # generate context brief and paste into any AI chat
+continuity log         # record what happened after your session
+continuity doctor      # check if your context files are healthy
+```
+
+The /ai directory lives in your repo. It is version-controlled. It is readable
+by humans and agents alike. It belongs to the project, not to any chat window.
+
+---
+
+## What the brief looks like
+
+```
+$ continuity brief
+
+=== Continuity Brief ===
+Generated: 2025-06-26T09:14:00.000Z
+
+--- Project ---
+Helios is a REST API for real-time solar energy monitoring. It ingests readings
+from inverter hardware and exposes a JSON API consumed by a React dashboard.
+Goals: sub-200ms p99 latency, multi-tenant by design, deployable on a single VPS.
+
+--- Architecture ---
+Node.js + Fastify. PostgreSQL with time-series partitioning. Redis for caching.
+Deployed via Docker Compose on DigitalOcean.
+
+--- Active Tasks ---
+- [ ] Implement /readings/aggregate endpoint
+- [ ] Add Redis cache layer for site-level rollups
+- [ ] Write load tests for ingestion pipeline
+
+--- Recent Decisions ---
+### 2025-06-24 — Chose Fastify over Express
+2x throughput advantage and schema validation justify the migration cost.
+
+--- Last Session ---
+### 2025-06-25 — Ingestion pipeline refactor
+Focus: Refactored inverter ingestion queue to use worker threads.
+Next: Add Redis cache layer and benchmark throughput.
+
+=== End Brief ===
+```
+
+Paste this at the start of any chat. Your agent is immediately oriented.
+
+---
+
+## The /ai directory
+
+```
+ai/
+  PROJECT.md       # What this project is and why it exists
+  ARCHITECTURE.md  # How the system is structured
+  TASKS.md         # Active work, backlog, done
+  DECISIONS.md     # Key technical and product decisions
+  AGENT_RULES.md   # How agents should behave in this repo
+  SESSION_LOG.md   # Chronological log of AI-assisted sessions
+```
+
+These files are designed to be committed to your repository. They are the source
+of truth for project context — useful to humans reading the repo and to any AI
+agent working in it.
+
+---
+
+## After your session
+
+```
+continuity log \
+  --focus "Implemented Redis cache layer" \
+  --changes "Created src/cache/redis.ts, updated aggregate endpoint" \
+  --decisions "TTL set to 60s based on inverter polling interval" \
+  --next "Write load tests for ingestion pipeline"
+```
+
+This appends a structured entry to SESSION_LOG.md, so the next session — whether
+tomorrow or next month — picks up exactly where you left off.
+
+---
+
+## Automatic context with MCP
+
+If you use Claude Desktop or Cursor with MCP support, you can skip the copy-paste
+step entirely. Continuity runs as a local MCP server and your agent pulls context
+automatically.
 
 ### Claude Desktop
 
-Add to your Claude Desktop config (~/.claude/claude_desktop_config.json):
+Add to ~/.claude/claude_desktop_config.json:
 
-  {
-    "mcpServers": {
-      "continuity": {
-        "command": "continuity",
-        "args": ["mcp", "--dir", "/path/to/your/project"]
-      }
-    }
-  }
-
-### Cursor
-
-Add to your Cursor MCP settings:
-
-  {
+```json
+{
+  "mcpServers": {
     "continuity": {
       "command": "continuity",
       "args": ["mcp", "--dir", "/path/to/your/project"]
     }
   }
+}
+```
 
-Once connected, your agent can call:
-- get_brief — returns the full project context brief
-- get_file — returns any specific /ai file by name
-- log_session — append a session entry to SESSION_LOG.md
-- update_file — overwrite a specific /ai file
+### Cursor
+
+Add to your Cursor MCP settings:
+
+```json
+{
+  "continuity": {
+    "command": "continuity",
+    "args": ["mcp", "--dir", "/path/to/your/project"]
+  }
+}
+```
+
+Once connected, your agent calls get_brief automatically. No copy-paste required.
+
+---
+
+## Why not just use a README, Cursor rules, or CLAUDE.md?
+
+README is written for humans discovering the project. It is not structured for
+agents, does not track decisions or sessions, and grows unwieldy as a context source.
+
+Cursor rules / .cursorrules are editor-specific and scoped to code style. They
+do not carry project goals, architecture decisions, task state, or session history.
+
+CLAUDE.md is Claude-specific. It does not work across tools, is not version-
+controlled as structured context, and has no session logging or health checking.
+
+Continuity is model-agnostic, tool-agnostic, and structured. It belongs to the
+repo, not to any specific editor or assistant. The goal is for /ai to become a
+convention — like .github or .vscode — that any AI tool can read.
+
+---
+
+## Who is this for?
+
+Continuity is useful if you:
+
+- Use AI coding assistants regularly (Cursor, Claude, Copilot, ChatGPT)
+- Work on projects that span multiple sessions, days, or weeks
+- Find yourself re-explaining the same context at the start of every chat
+- Want your agents to stay aligned with your architecture and decisions over time
+- Work solo and use AI as a collaborator, not just an autocomplete
+
+It is probably not useful if you only use AI for one-off questions or short scripts
+where context does not accumulate.
+
+---
+
+## Current status
+
+Continuity is an early-stage open-source project. The core workflow works and is
+published on npm. The project is actively seeking early users and feedback.
+
+If you try it, please open an issue or start a discussion and tell us:
+
+- What confused you
+- What you wish it did differently
+- Whether you would use it again
+
+That feedback directly shapes what gets built next.
+
+Star the repo if you find it useful or want to follow the project. It helps
+more than you might think.
+
+---
+
+## Install
+
+```
+npm install -g @continuityai/cli
+```
+
+Or use without installing:
+
+```
+npx @continuityai/cli init
+npx @continuityai/cli brief
+```
+
+Requires Node.js 18 or higher.
 
 ---
 
@@ -89,23 +238,17 @@ Once connected, your agent can call:
 
 ### continuity init
 
-Creates the /ai directory and scaffolds these files if they do not already exist:
+Scaffolds the /ai directory and all context files. Existing files are never overwritten.
 
-  ai/
-    PROJECT.md       # What the project is and why it exists
-    ARCHITECTURE.md  # How the system is structured
-    TASKS.md         # Active work, backlog, and done
-    DECISIONS.md     # Key technical and product decisions
-    AGENT_RULES.md   # How AI agents should behave in this repo
-    SESSION_LOG.md   # Chronological log of AI-assisted sessions
-
-Existing files are never overwritten.
-
-Use `--interactive` (`-i`) to prompt for project name, description, and stack, then
-pre-fill PROJECT.md automatically.
+Use --interactive (-i) to be prompted for project name, description, and stack.
+PROJECT.md is pre-filled automatically.
 
 ```
-$ continuity init
+$ continuity init -i
+
+? Project name: Helios
+? What does this project do? REST API for real-time solar energy monitoring
+? Primary language / stack: Node.js, Fastify, PostgreSQL
 
 ✔ Created ai/PROJECT.md
 ✔ Created ai/ARCHITECTURE.md
@@ -120,113 +263,32 @@ Project memory initialized. Fill in your /ai files, then run:
 
 ### continuity brief
 
-Reads the /ai directory and prints a compact context summary to stdout.
-
-  --no-rules            Omit AGENT_RULES.md from output
-  --only <sections>     Include only specific sections
-                        Keys: project, arch, tasks, decisions, rules, log
-  --format <format>     Output format: text or json (default: text)
-  -d, --dir <path>      Target a different project directory
+Reads /ai and prints a compact context summary to stdout.
 
 ```
-$ continuity brief
-
-=== Continuity Brief ===
-Generated: 2025-06-25T14:32:01.000Z
-
---- Project ---
-# Project
-
-Helios is a REST API for real-time solar energy monitoring. It ingests readings
-from inverter hardware, aggregates by site and time window, and exposes a JSON API
-consumed by a React dashboard.
-
-Goals: sub-200ms p99 latency, multi-tenant by design, deployable on a single VPS.
-
---- Architecture ---
-# Architecture
-
-Node.js + Fastify. PostgreSQL with time-series partitioning. Redis for caching
-aggregated readings. Deployed via Docker Compose on a single DigitalOcean Droplet.
-
---- Active Tasks ---
-# Tasks
-
-## Active
-- [ ] Implement /readings/aggregate endpoint
-- [ ] Add Redis cache layer for site-level rollups
-- [ ] Write load tests for ingestion pipeline
-
---- Recent Decisions ---
-# Decisions
-
-### 2025-06-24 — Chose Fastify over Express
-Fastify's schema-based validation and 2x throughput advantage justify the
-migration cost. Express stays in the codebase until all routes are ported.
-
---- Last Session ---
-### 2025-06-25 — Ingestion pipeline refactor
-
-Focus: Refactored the inverter ingestion queue to use worker threads.
-Changes: Created src/workers/ingestion.ts, updated src/queue/index.ts.
-Next: Add Redis cache layer and benchmark throughput improvement.
-
-=== End Brief ===
-```
-
-### continuity mcp
-
-Starts an MCP server over stdio. Connect from Claude Desktop, Cursor, or any
-MCP-compatible agent. Exposes get_brief, get_file, log_session, and update_file tools.
-
-  -d, --dir <path>      Target project directory
-
-```
-# Agent calls get_brief tool — receives full project context automatically.
-# No copy-paste required. Context updates every time the agent calls the tool.
+--no-rules            Omit AGENT_RULES.md
+--only <sections>     project, arch, tasks, decisions, rules, log
+--format json         Machine-readable output
+-d, --dir <path>      Target directory
 ```
 
 ### continuity log
 
-Appends a structured session entry to ai/SESSION_LOG.md.
-
-  --focus <text>        What the session focused on (required)
-  --changes <text>      Summary of what changed (required)
-  --decisions <text>    Decisions made, or "none" (required)
-  --next <text>         What the next session should pick up (required)
-  --date <YYYY-MM-DD>   Override today's date (optional)
-  -d, --dir <path>      Target a different project directory
+Appends a structured session entry to SESSION_LOG.md.
 
 ```
-$ continuity log \
-  --focus "Implemented Redis cache layer" \
-  --changes "Created src/cache/redis.ts, updated aggregate endpoint" \
-  --decisions "TTL set to 60s based on inverter polling interval" \
-  --next "Write load tests for ingestion pipeline"
-
-✔ Session logged to ai/SESSION_LOG.md
+--focus <text>        What the session focused on (required)
+--changes <text>      What changed (required)
+--decisions <text>    Decisions made, or "none" (required)
+--next <text>         What to pick up next (required)
+--date YYYY-MM-DD     Override date
+-d, --dir <path>      Target directory
 ```
 
 ### continuity doctor
 
-Checks the health of your /ai context files.
-
-  -d, --dir <path>      Target a different project directory
-
-Exit code 0 if all files are healthy. Exit code 1 if any are missing or empty.
-
-```
-$ continuity doctor
-
-✔ PROJECT.md      healthy
-✔ ARCHITECTURE.md healthy
-✔ TASKS.md        healthy
-✔ DECISIONS.md    healthy
-✔ AGENT_RULES.md  healthy
-✔ SESSION_LOG.md  healthy
-
-All context files are healthy.
-```
+Checks whether /ai files are filled in and healthy. Exits 1 if any file needs attention.
+Useful as a CI check.
 
 ```
 $ continuity doctor
@@ -238,39 +300,48 @@ $ continuity doctor
 ✔ AGENT_RULES.md  healthy
 ✔ SESSION_LOG.md  healthy
 
-2 files need attention. Run continuity init to recreate missing files.
+2 files need attention.
+```
+
+### continuity mcp
+
+Starts a local MCP server over stdio. Exposes get_brief, get_file, log_session,
+and update_file tools to any connected agent.
+
+```
+-d, --dir <path>      Target directory
 ```
 
 ---
 
-## Install
+## Philosophy
 
-  npm install -g @continuityai/cli
+Project memory belongs to the repository, not the chat window.
 
-The package is published as @continuityai/cli but installs as the `continuity` command.
-All commands below use `continuity` as the binary name.
+Context that lives only in a conversation is lost the moment the session ends.
+Context that lives in the repo is permanent, version-controlled, and available
+to every tool, every collaborator, and every future agent that works on the project.
 
-Or use without installing:
+Continuity is not trying to replace AI assistants or make them smarter. It is
+trying to give them a stable, structured place to read and write project context —
+the same way .github gives GitHub a place to find workflows and templates.
 
-  npx @continuityai/cli init
-  npx @continuityai/cli brief
-
----
-
-## The /ai Directory
-
-The /ai directory is designed to be committed to your repository. It is the
-source of truth for project context that works equally well for humans and AI.
+The long-term goal is for the /ai directory to become a convention: something
+developers add to every new project the same way they add a README or a .gitignore.
 
 ---
 
-## Roadmap
+## Contributing
 
-  Phase     Feature
-  -------   -------------------------------------------------------
-  v0.3      init, brief, log, doctor — complete habit loop
-  v0.4      MCP server — agents pull context automatically (current)
-  v1.0      Stable API, team sharing, editor plugins
+See CONTRIBUTING.md for setup instructions and contribution guidelines.
+
+The most useful contributions right now are not code. They are:
+
+- Trying Continuity on a real project and reporting what confused you
+- Suggesting what context you actually need your AI agent to have
+- Sharing whether the habit loop (init, brief, log) feels natural or forced
+
+Open an issue or start a GitHub Discussion. All feedback is read.
 
 ---
 

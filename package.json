@@ -1,14 +1,14 @@
 {
   "name": "@continuityai/cli",
   "version": "0.6.0",
-  "description": "Project memory for AI-assisted software development",
-  "homepage": "https://github.com/your-org/continuity",
+  "description": "Persistent project memory for AI coding assistants. One command gives any agent your full project context.",
+  "homepage": "https://github.com/TODO_REPLACE_USERNAME/continuity#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-org/continuity"
+    "url": "https://github.com/TODO_REPLACE_USERNAME/continuity"
   },
   "bugs": {
-    "url": "https://github.com/your-org/continuity/issues"
+    "url": "https://github.com/TODO_REPLACE_USERNAME/continuity/issues"
   },
   "type": "module",
   "bin": {
@@ -28,16 +28,21 @@
     "test:watch": "vitest"
   },
   "keywords": [
-    "cli",
     "ai",
-    "continuity",
-    "agent",
-    "context"
+    "developer-tools",
+    "cli",
+    "cursor",
+    "claude",
+    "copilot",
+    "context",
+    "memory",
+    "mcp",
+    "productivity"
   ],
-  "author": "",
+  "author": "TODO_REPLACE_USERNAME",
   "license": "MIT",
   "engines": {
-    "node": ">=22"
+    "node": ">=18.0.0"
   },
   "devDependencies": {
     "@types/node": "^26.0.1",
