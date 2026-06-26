@@ -2,6 +2,12 @@
 
 All notable changes to Continuity are documented here.
 
+## [0.6.0] — 2025-06-26
+
+### Added
+- continuity init --interactive (-i) — prompts for project name, description, and stack, pre-fills PROJECT.md
+- README sample output blocks for all commands showing realistic terminal output
+
 ## [0.5.1] — 2025-06-25
 
 ### Changed

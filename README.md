@@ -80,6 +80,8 @@ Add to your Cursor MCP settings:
 Once connected, your agent can call:
 - get_brief — returns the full project context brief
 - get_file — returns any specific /ai file by name
+- log_session — append a session entry to SESSION_LOG.md
+- update_file — overwrite a specific /ai file
 
 ---
 
@@ -99,6 +101,23 @@ Creates the /ai directory and scaffolds these files if they do not already exist
 
 Existing files are never overwritten.
 
+Use `--interactive` (`-i`) to prompt for project name, description, and stack, then
+pre-fill PROJECT.md automatically.
+
+```
+$ continuity init
+
+✔ Created ai/PROJECT.md
+✔ Created ai/ARCHITECTURE.md
+✔ Created ai/TASKS.md
+✔ Created ai/DECISIONS.md
+✔ Created ai/AGENT_RULES.md
+✔ Created ai/SESSION_LOG.md
+
+Project memory initialized. Fill in your /ai files, then run:
+  continuity brief
+```
+
 ### continuity brief
 
 Reads the /ai directory and prints a compact context summary to stdout.
@@ -106,14 +125,66 @@ Reads the /ai directory and prints a compact context summary to stdout.
   --no-rules            Omit AGENT_RULES.md from output
   --only <sections>     Include only specific sections
                         Keys: project, arch, tasks, decisions, rules, log
+  --format <format>     Output format: text or json (default: text)
   -d, --dir <path>      Target a different project directory
+
+```
+$ continuity brief
+
+=== Continuity Brief ===
+Generated: 2025-06-25T14:32:01.000Z
+
+--- Project ---
+# Project
+
+Helios is a REST API for real-time solar energy monitoring. It ingests readings
+from inverter hardware, aggregates by site and time window, and exposes a JSON API
+consumed by a React dashboard.
+
+Goals: sub-200ms p99 latency, multi-tenant by design, deployable on a single VPS.
+
+--- Architecture ---
+# Architecture
+
+Node.js + Fastify. PostgreSQL with time-series partitioning. Redis for caching
+aggregated readings. Deployed via Docker Compose on a single DigitalOcean Droplet.
+
+--- Active Tasks ---
+# Tasks
+
+## Active
+- [ ] Implement /readings/aggregate endpoint
+- [ ] Add Redis cache layer for site-level rollups
+- [ ] Write load tests for ingestion pipeline
+
+--- Recent Decisions ---
+# Decisions
+
+### 2025-06-24 — Chose Fastify over Express
+Fastify's schema-based validation and 2x throughput advantage justify the
+migration cost. Express stays in the codebase until all routes are ported.
+
+--- Last Session ---
+### 2025-06-25 — Ingestion pipeline refactor
+
+Focus: Refactored the inverter ingestion queue to use worker threads.
+Changes: Created src/workers/ingestion.ts, updated src/queue/index.ts.
+Next: Add Redis cache layer and benchmark throughput improvement.
+
+=== End Brief ===
+```
 
 ### continuity mcp
 
 Starts an MCP server over stdio. Connect from Claude Desktop, Cursor, or any
-MCP-compatible agent. Exposes get_brief and get_file tools.
+MCP-compatible agent. Exposes get_brief, get_file, log_session, and update_file tools.
 
   -d, --dir <path>      Target project directory
+
+```
+# Agent calls get_brief tool — receives full project context automatically.
+# No copy-paste required. Context updates every time the agent calls the tool.
+```
 
 ### continuity log
 
@@ -126,6 +197,16 @@ Appends a structured session entry to ai/SESSION_LOG.md.
   --date <YYYY-MM-DD>   Override today's date (optional)
   -d, --dir <path>      Target a different project directory
 
+```
+$ continuity log \
+  --focus "Implemented Redis cache layer" \
+  --changes "Created src/cache/redis.ts, updated aggregate endpoint" \
+  --decisions "TTL set to 60s based on inverter polling interval" \
+  --next "Write load tests for ingestion pipeline"
+
+✔ Session logged to ai/SESSION_LOG.md
+```
+
 ### continuity doctor
 
 Checks the health of your /ai context files.
@@ -133,6 +214,32 @@ Checks the health of your /ai context files.
   -d, --dir <path>      Target a different project directory
 
 Exit code 0 if all files are healthy. Exit code 1 if any are missing or empty.
+
+```
+$ continuity doctor
+
+✔ PROJECT.md      healthy
+✔ ARCHITECTURE.md healthy
+✔ TASKS.md        healthy
+✔ DECISIONS.md    healthy
+✔ AGENT_RULES.md  healthy
+✔ SESSION_LOG.md  healthy
+
+All context files are healthy.
+```
+
+```
+$ continuity doctor
+
+✔ PROJECT.md      healthy
+✗ ARCHITECTURE.md missing
+✔ TASKS.md        healthy
+✗ DECISIONS.md    empty
+✔ AGENT_RULES.md  healthy
+✔ SESSION_LOG.md  healthy
+
+2 files need attention. Run continuity init to recreate missing files.
+```
 
 ---
 

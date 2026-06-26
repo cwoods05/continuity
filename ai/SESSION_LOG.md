@@ -129,3 +129,18 @@ homepage, bugs fields to package.json. Bumped to v0.5.1.
 Update repository URLs in package.json. Record demo GIF.
 
 ---
+
+### 2025-06-26 — README sample output and interactive init
+
+**Focus:** Make the repository immediately understandable to first-time visitors
+and reduce friction for new project setup.
+
+**Changes:** Rewrote README.md with realistic terminal output for all commands.
+Added continuity init --interactive with readline prompts and PROJECT.md pre-fill.
+Added src/utils/prompt.ts. Updated ai/TASKS.md.
+
+**Decisions:** Used Node.js built-in readline to avoid adding new dependencies.
+
+**Next:** Publish to npm. Record demo GIF.
+
+---

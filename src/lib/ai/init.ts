@@ -1,4 +1,5 @@
 import path from "node:path";
+import { writeFile } from "node:fs/promises";
 import {
   AI_DIRECTORY_NAME,
   AI_FILE_TEMPLATES,
@@ -13,6 +14,47 @@ export interface InitResult {
   createdDirectory: boolean;
   createdFiles: string[];
   skippedFiles: string[];
+}
+
+export interface InteractiveProjectAnswers {
+  projectName: string;
+  description: string;
+  stack: string;
+}
+
+export async function writeInteractiveProjectFile(
+  targetDirectory: string,
+  answers: InteractiveProjectAnswers,
+): Promise<void> {
+  const filePath = path.join(
+    path.resolve(targetDirectory, AI_DIRECTORY_NAME),
+    "PROJECT.md",
+  );
+
+  const content = `# Project
+
+## Overview
+
+${answers.projectName} — ${answers.description}
+
+## Stack
+
+${answers.stack}
+
+## Goals
+
+_Add your project goals here._
+
+## Non-Goals
+
+_Add what this project explicitly does not do._
+
+## Key Constraints
+
+_Add technical or product constraints here._
+`;
+
+  await writeFile(filePath, content, "utf8");
 }
 
 export async function initializeAiDirectory(

@@ -8,7 +8,6 @@
 
 ## Backlog
 
-- [ ] continuity init --interactive — guided setup that prompts for project info
 - [ ] continuity watch — auto-append session log entries on file save
 - [ ] Editor plugin — VS Code extension that injects brief at session start
 - [ ] continuity sync — push /ai context to a shared store for teams
@@ -29,3 +28,4 @@
 - [x] Renamed npm package to @continuityai/cli (binary stays "continuity")
 - [x] npm publish readiness (version 0.5.1)
 - [x] README overhaul with sample output and MCP setup guide
+- [x] continuity init --interactive — guided setup with project pre-fill

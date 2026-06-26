@@ -1,6 +1,6 @@
 {
   "name": "@continuityai/cli",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "Project memory for AI-assisted software development",
   "homepage": "https://github.com/your-org/continuity",
   "repository": {
