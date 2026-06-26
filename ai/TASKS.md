@@ -4,7 +4,7 @@
 
 - [ ] Create GitHub repository and push all code
 - [ ] Run npm login and pnpm publish --access public
-- [ ] Replace all TODO_REPLACE_USERNAME placeholders in package.json, README, CONTRIBUTING
+- [ ] Replace all cwoods05 placeholders in package.json, README, CONTRIBUTING
 - [ ] Record demo GIF: continuity init -i followed by continuity brief | pbcopy
 - [ ] Share with 5 real developers and collect feedback via GitHub issues
 

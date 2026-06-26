@@ -21,7 +21,7 @@ This feedback directly shapes what gets built next.
 ## Development setup
 
 ```
-git clone https://github.com/TODO_REPLACE_USERNAME/continuity
+git clone https://github.com/cwoods05/continuity
 cd continuity
 pnpm install
 pnpm dev brief        # run without building

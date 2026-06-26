@@ -2,13 +2,13 @@
   "name": "@continuityai/cli",
   "version": "0.6.0",
   "description": "Persistent project memory for AI coding assistants. One command gives any agent your full project context.",
-  "homepage": "https://github.com/TODO_REPLACE_USERNAME/continuity#readme",
+  "homepage": "https://github.com/cwoods05/continuity#readme",
   "repository": {
     "type": "git",
-    "url": "https://github.com/TODO_REPLACE_USERNAME/continuity"
+    "url": "https://github.com/cwoods05/continuity"
   },
   "bugs": {
-    "url": "https://github.com/TODO_REPLACE_USERNAME/continuity/issues"
+    "url": "https://github.com/cwoods05/continuity/issues"
   },
   "type": "module",
   "bin": {
@@ -39,7 +39,7 @@
     "mcp",
     "productivity"
   ],
-  "author": "TODO_REPLACE_USERNAME",
+  "author": "cwoods05",
   "license": "MIT",
   "engines": {
     "node": ">=18.0.0"
