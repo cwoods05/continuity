@@ -52,6 +52,6 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.29.0",
-    "commander": "^15.0.0"
+    "commander": "12"
   }
 }
