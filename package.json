@@ -1,6 +1,6 @@
 {
   "name": "@continuityai/cli",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "Persistent project memory for AI coding assistants. One command gives any agent your full project context.",
   "homepage": "https://github.com/cwoods05/continuity#readme",
   "repository": {
