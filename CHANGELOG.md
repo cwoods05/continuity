@@ -2,6 +2,22 @@
 
 All notable changes to Continuity are documented here.
 
+## [Unreleased]
+
+### Changed
+- README reframed as a completed proof-of-concept with accurate command output
+- CONTRIBUTING, package description, and `/ai` docs aligned with finished-experiment status
+- Removed speculative backlog items and the inaccurate `continuity mcp init` done-item
+- MCP server uses `AI_DIRECTORY_NAME` instead of a hardcoded path segment
+
+## [0.6.1] — 2025-06-26
+
+### Added
+- README demo GIF showing the init / brief workflow
+
+### Changed
+- Package version bump to 0.6.1
+
 ## [0.6.0] — 2025-06-26
 
 ### Added

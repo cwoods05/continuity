@@ -16,7 +16,7 @@
 - Do not add background services, file watchers, or daemons
 - Do not add config files or environment variable requirements
 - Do not introduce new runtime dependencies without explicit approval
-- Do not modify /ai markdown files from within lib/ code — those are user-owned files
+- Do not silently rewrite user-owned /ai content outside init scaffolding, log append, and MCP write tools
 
 ## Workflow
 

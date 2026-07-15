@@ -12,8 +12,8 @@ over stdio using the Model Context Protocol.
 - **CLI (src/cli.ts)** — Commander program entry point, registers all commands
 - **commands/** — Thin command handlers; parse flags, call lib functions, print output
 - **lib/ai/** — All domain logic: initialization, brief generation, session parsing, doctor checks, log appending
-- **mcp/server.ts** — MCP server exposing get_brief and get_file tools over stdio
-- **utils/** — Filesystem helpers and package.json reader
+- **mcp/server.ts** — MCP server exposing get_brief, get_file, log_session, and update_file over stdio
+- **utils/** — Filesystem helpers, package.json reader, and interactive prompts
 
 ## Data Flow
 

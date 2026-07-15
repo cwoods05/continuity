@@ -8,6 +8,7 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import { generateBrief } from "../lib/ai/brief.js";
 import { appendSessionEntry } from "../lib/ai/log.js";
+import { AI_DIRECTORY_NAME } from "../lib/ai/templates.js";
 import { readPackageJson } from "../utils/package.js";
 
 const ALLOWED_FILES = [
@@ -141,7 +142,11 @@ export async function startMcpServer(projectDirectory: string): Promise<void> {
         return toolError(ALLOWED_FILES_MESSAGE);
       }
 
-      const filePath = path.join(projectDirectory, "ai", filename);
+      const filePath = path.join(
+        projectDirectory,
+        AI_DIRECTORY_NAME,
+        filename,
+      );
 
       try {
         const fileContent = await readFile(filePath, "utf8");
@@ -205,7 +210,11 @@ export async function startMcpServer(projectDirectory: string): Promise<void> {
         return toolError("Missing required field: content");
       }
 
-      const filePath = path.join(projectDirectory, "ai", filename);
+      const filePath = path.join(
+        projectDirectory,
+        AI_DIRECTORY_NAME,
+        filename,
+      );
 
       try {
         await writeFile(filePath, content, "utf8");

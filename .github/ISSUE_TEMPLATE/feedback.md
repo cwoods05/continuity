@@ -1,25 +1,21 @@
 ---
 name: Feedback / User Report
-about: Tried Continuity on a real project? Tell us what happened.
+about: Notes from trying Continuity on a real project
 labels: feedback
 ---
 
 ## What I was trying to do
 
-<!-- Describe your project and what you wanted Continuity to help with -->
+<!-- Project and goal -->
 
 ## What happened
 
-<!-- Walk through what you did and what the result was -->
+<!-- What you ran and what you got -->
 
-## What confused me or could be better
+## What was confusing or inaccurate
 
-<!-- Be specific. The more direct, the more useful. -->
+<!-- Docs, UX, or behavior mismatches -->
 
 ## My AI coding setup
 
 <!-- e.g. Cursor + Claude, VS Code + Copilot, Claude Desktop, etc. -->
-
-## Would I use it again?
-
-<!-- Yes / No / Maybe — and why -->

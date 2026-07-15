@@ -2,17 +2,19 @@
 
 ## Overview
 
-Continuity is a CLI tool that gives AI coding assistants persistent project memory.
-It scaffolds a small /ai directory in any repository, which developers fill in once.
-From then on, a single command generates a compact context brief that can be pasted
-into any AI assistant — Cursor, Claude, ChatGPT, Copilot, or any future agent.
+Continuity is a Node.js CLI that explores repository-owned context for AI coding
+assistants. It scaffolds an `/ai` directory of markdown files, assembles them
+into a plain-text brief (`continuity brief`), appends session notes
+(`continuity log`), checks file health (`continuity doctor`), and can expose the
+same data over a local stdio MCP server (`continuity mcp`).
+
+It does not call AI APIs or run services outside the developer's machine.
 
 ## Goals
 
-- Make it effortless for developers to give AI assistants accurate project context
-- Work with every AI tool without requiring API keys or proprietary integrations
-- Establish the /ai directory as a standard convention for AI-assisted repositories
-- Build a habit loop: init → brief → work → log → repeat
+- Make project context version-controlled and tool-agnostic
+- Keep the workflow local, flag-driven, and pipeable
+- Demonstrate an `/ai` convention as a portable experiment, not as platform infrastructure
 
 ## Non-Goals
 
@@ -20,15 +22,15 @@ into any AI assistant — Cursor, Claude, ChatGPT, Copilot, or any future agent.
 - Continuity does not call any AI APIs
 - Continuity is not a documentation generator
 - Continuity does not replace human-written documentation
+- Continuity is not an actively evolving SaaS product
 
 ## Key Constraints
 
 - Must work without API keys or background services
 - Output must be model-agnostic plain text
-- CLI must be installable globally via npm in one command
-- Every feature must be demoable without a paid subscription to anything
+- CLI must be installable globally via npm
+- Scope stays on-disk files + local MCP stdio
 
 ## Stakeholders
 
-Developers using AI coding assistants who want their agents to stay aligned across
-sessions, tools, and time.
+Developers evaluating or adopting simple, file-based context for AI-assisted work.

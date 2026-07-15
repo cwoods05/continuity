@@ -1,26 +1,12 @@
 # Contributing to Continuity
 
-Thank you for your interest. Continuity is an early-stage project and the most
-valuable contributions right now are user feedback, not pull requests.
-
----
-
-## The most useful thing you can do
-
-Try Continuity on a real project. Then open an issue and tell us:
-
-- What was confusing or unclear
-- What you expected to happen that did not happen
-- Whether you would use it again and why
-- What your actual AI coding workflow looks like
-
-This feedback directly shapes what gets built next.
-
----
+Continuity is a completed proof-of-concept. The most useful contributions are
+accurate bug reports and small fixes that keep the existing CLI honest — not
+new product features.
 
 ## Development setup
 
-```
+```bash
 git clone https://github.com/cwoods05/continuity
 cd continuity
 pnpm install
@@ -31,54 +17,40 @@ pnpm test             # run test suite
 
 Requires Node.js 18+ and pnpm.
 
----
-
 ## Project structure
 
 ```
 src/commands/     CLI command handlers — thin, no business logic
-src/lib/ai/       All domain logic
+src/lib/ai/       Domain logic (init, brief, log, doctor, templates)
 src/mcp/          MCP server implementation
-src/utils/        Filesystem and package utilities
+src/utils/        Filesystem, package.json, and prompt helpers
 tests/            Vitest tests — real temp dirs, no mocks
 ai/               Continuity's own /ai context files
 ```
 
----
-
-## Adding a command
-
-1. Create src/commands/yourcommand.ts exporting registerYourcommandCommand(program)
-2. Create src/lib/ai/yourcommand.ts with domain logic
-3. Register in src/cli.ts
-4. Add tests in tests/yourcommand.test.ts
-
----
-
-## Principles
-
-- No AI API calls, embeddings, or external services
-- No background daemons or file watchers
-- No interactive prompts — everything is flags-based and pipeable
-- All new runtime dependencies require explicit justification
-
----
-
 ## Pull requests
 
 - Keep PRs focused on a single concern
-- All tests must pass: pnpm test
-- If your PR changes architecture, update the /ai files
-- Open an issue before starting large changes
+- All tests must pass: `pnpm test`
+- If your PR changes architecture or behavior, update the `/ai` files and README
+- Open an issue before large changes
 
----
+## Project boundaries
 
-## What we are not building right now
+These were intentional constraints for the experiment and should stay:
+
+- No AI API calls, embeddings, or external model services
+- No background daemons or file watchers
+- No cloud sync, databases, auth, telemetry, or web UI
+- Prefer flags and stdout; the only interactive path is `continuity init -i`
+- New runtime dependencies need a clear justification
+
+## Out of scope
+
+Not planned for this repository:
 
 - Embeddings or vector search
 - Cloud sync or team sharing
 - A web app or dashboard
 - Editor plugins
 - Authentication or accounts
-
-If you think one of these is important, open an issue explaining the use case.

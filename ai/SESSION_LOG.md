@@ -162,3 +162,20 @@ for now with a documented decision to revisit. See DECISIONS.md.
 collect feedback via the new issue template.
 
 ---
+
+### 2026-07-15 — Repository polish for completed PoC
+
+**Focus:** Prepare the repository as a finished side-project portfolio piece without
+adding product scope.
+
+**Changes:** Rewrote README (status, accurate CLI samples, no marketing inflated
+claims). Updated CONTRIBUTING, package description, PROJECT.md, TASKS.md,
+ARCHITECTURE.md, AGENT_RULES.md, CHANGELOG, feedback issue template. MCP path
+join now uses AI_DIRECTORY_NAME.
+
+**Decisions:** Frame Continuity as a completed proof-of-concept; leave empty-detection
+heuristics and command UX unchanged.
+
+**Next:** None required for this experiment.
+
+---
